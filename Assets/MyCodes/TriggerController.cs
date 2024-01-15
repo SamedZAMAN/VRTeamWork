@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class TriggerController : MonoBehaviour
 {
     private GameManager gameManager; // GameManager scriptini içerecek deðiþken
-    private DialogueManager dialogueManager; //Dialogue Manager scripti
     private Color transparentColor = new Color(1f, 1f, 1f, 0f); // Tamamen transparan renk
     private Color eskiRenk; //objeleri eski rengine çevirmek için
     private Image imageComponent; //objelerin içerisindeki image
@@ -17,9 +16,6 @@ public class TriggerController : MonoBehaviour
     {
         // GameManager adýnda bir GameObject'i bulun
         GameObject gameManagerObject = GameObject.Find("GameManager");
-
-        // GameManager adýnda bir GameObject'i bulun
-        GameObject dialogueManagerObject = GameObject.Find("DialogueManager");
 
         // Objeyi renklendirmek için Renderer bileþenini al
         objectRenderer = GetComponent<Renderer>();
@@ -37,11 +33,6 @@ public class TriggerController : MonoBehaviour
         if (gameManagerObject != null)
         {
             gameManager = gameManagerObject.GetComponent<GameManager>();
-        }
-        // dialoggueManager scriptine eriþin
-        if (dialogueManagerObject != null)
-        {
-            dialogueManager = dialogueManagerObject.GetComponent<DialogueManager>();
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -84,23 +75,6 @@ public class TriggerController : MonoBehaviour
                     gameManager.ChangeButtonColor(Color.black);
                 }
             }
-            else if (objectTag == "nextDialogue")
-            {
-                if (other.gameObject.layer == LayerMask.NameToLayer("HandL"))
-                {
-                    // Sol el ile "HandL" layer temasý olduðunda bu blok çalýþýr
-                    imageComponent.color = Color.green; // Image bileþeninin rengini yeþile ayarlayýn
-                }
-            }
-            //ilk seceneði seçersen
-            else if (objectTag == "firstChoice")
-            {
-                if (other.gameObject.layer == LayerMask.NameToLayer("HandL"))
-                {
-                    // Sol el ile "HandL" layer temasý olduðunda bu blok çalýþýr
-                    imageComponent.color = Color.green; // Image bileþeninin rengini yeþile ayarlayýn
-                }
-            }
         }
 
         //sað el true olduðunda
@@ -135,22 +109,6 @@ public class TriggerController : MonoBehaviour
                     gameManager.ChangeButtonColor(Color.black);
                 }
             }
-            else if (objectTag == "nextDialogue")
-            {
-                if (other.gameObject.layer == LayerMask.NameToLayer("HandR"))
-                {
-                    // Sað el ile "HandR" layer temasý olduðunda bu blok çalýþýr
-                    imageComponent.color = Color.green;
-                }
-            }
-            else if (objectTag == "firstChoice")
-            {
-                if (other.gameObject.layer == LayerMask.NameToLayer("HandR"))
-                {
-                    // Sol el ile "HandL" layer temasý olduðunda bu blok çalýþýr
-                    imageComponent.color = Color.green; // Image bileþeninin rengini yeþile ayarlayýn
-                }
-            }
         }
     }
 
@@ -170,25 +128,6 @@ public class TriggerController : MonoBehaviour
                     gameManager.KapatBilgiKutusu();
                 }
             }
-            else if (objectTag == "nextDialogue")
-            {
-                if (other.gameObject.layer == LayerMask.NameToLayer("HandL"))
-                {
-                    // Sað el ile "HandR" layer temasý olduðunda bu blok çalýþýr
-                    dialogueManager.StoryContinue();
-                    imageComponent.color = eskiRenk; // Eski rengini geri yükleyin
-                }
-            }
-            else if (objectTag == "firstChoice")
-            {
-                if (other.gameObject.layer == LayerMask.NameToLayer("HandL"))
-                {
-                    // Sol el ile "HandL" layer temasý olduðunda bu blok çalýþýr
-                    Debug.Log("ilk secenek secildi");
-                    imageComponent.color = eskiRenk; // Eski rengini geri yükleyin
-                    dialogueManager.firstChoice();
-                }
-            }
         }
 
         //sað el true olduðunda
@@ -200,25 +139,6 @@ public class TriggerController : MonoBehaviour
                 {
                     // bilgikutusu kapanýr
                     gameManager.KapatBilgiKutusu();
-                }
-            }
-            else if (objectTag == "nextDialogue")
-            {
-                if (other.gameObject.layer == LayerMask.NameToLayer("HandR"))
-                {
-                    // Sað el ile "HandR" layer temasý olduðunda bu blok çalýþýr
-                    dialogueManager.StoryContinue();
-                    imageComponent.color = eskiRenk; // Eski rengini geri yükleyin
-                }
-            }
-            else if (objectTag == "firstChoice")
-            {
-                if (other.gameObject.layer == LayerMask.NameToLayer("HandR"))
-                {
-                    // Sol el ile "HandL" layer temasý olduðunda bu blok çalýþýr
-                    
-                    imageComponent.color = eskiRenk; // Eski rengini geri yükleyin
-                    dialogueManager.firstChoice();
                 }
             }
         }
